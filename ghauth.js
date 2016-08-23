@@ -159,7 +159,24 @@ function auth (options, callback) {
       if (options.noSave)
         return callback(null, tokenData)
 
-      config.write(tokenData, afterWrite)
+      // Create dir if it does not exist by writing empty file.
+      config.write({}, afterEmptyWrite)
+
+      function afterEmptyWrite (err) {
+        if (err)
+          return callback(err)
+
+        // Because we're storing tokens, set restrictive permissions on dir
+        var configDir = path.dirname(config.filePath)
+        fs.chmod(configDir, 0700, afterChmod)
+      }
+
+      function afterChmod (err) {
+        if (err)
+          return callback(err)
+
+        config.write(tokenData, afterWrite)
+      }
 
       function afterWrite (err) {
         if (err)
