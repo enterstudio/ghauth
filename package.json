@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "application-config": "~0.2.0",
-    "bl": "~1.0.0",
+    "bl": "~1.2.3",
     "hyperquest": "~1.2.0",
     "mkdirp": "~0.5.0",
     "read": "~1.0.7",
